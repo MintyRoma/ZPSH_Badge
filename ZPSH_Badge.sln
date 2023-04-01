@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPSH_Badge", "ZPSH_Badge.csproj", "{8B1090C1-A68A-4149-ACCD-D7C48F3FFEEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B1090C1-A68A-4149-ACCD-D7C48F3FFEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1090C1-A68A-4149-ACCD-D7C48F3FFEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1090C1-A68A-4149-ACCD-D7C48F3FFEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1090C1-A68A-4149-ACCD-D7C48F3FFEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\contacts-book-line.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.4" />
+      <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.4" />
+      <PackageReference Include="SharpVectors" Version="1.8.1" />
+      <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
+      <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Resources\Images\contacts-book-line.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Resources\Images\add-line.png" />
+      <Resource Include="Resources\Images\add-line.png" />
+      <None Remove="Resources\Images\delete-bin-line.png" />
+      <Resource Include="Resources\Images\delete-bin-line.png" />
+      <None Remove="Resources\Images\pencil-line.png" />
+      <Resource Include="Resources\Images\pencil-line.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\" />
+    </ItemGroup>
+
+</Project>

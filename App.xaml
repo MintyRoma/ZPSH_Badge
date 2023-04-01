@@ -1,0 +1,9 @@
+﻿<Application x:Class="ZPSH_Badge.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ZPSH_Badge"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         <FontFamily x:Key="Inter">pack://application:,,,/Resources/Fonts/#Inter</FontFamily>
+    </Application.Resources>
+</Application>
