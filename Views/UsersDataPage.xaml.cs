@@ -29,7 +29,7 @@ namespace ZPSH_Badge.Views
             users.Clear();
             SQLiteConnection conn = new SQLiteConnection(connectionString);
             conn.Open();
-            string request = "SELECT users.* ,styles.Name as StyleName FROM users Inner JOIN styles ON users.Style = styles.ID ;";
+            string request = "SELECT users.*, s.Name as StyleName FROM users LEFT JOIN styles s ON users.style  = s.ID";
             SQLiteCommand coma = new SQLiteCommand(request, conn);
             SQLiteDataReader info = coma.ExecuteReader();
             if (info.HasRows)
@@ -38,19 +38,22 @@ namespace ZPSH_Badge.Views
                 {
                     UserModel user = new UserModel();
                     user.ID = info.GetInt32(info.GetOrdinal("ID"));
-                    user.Surname = info.GetValue(info.GetOrdinal("Surname")).GetType()== typeof(DBNull)
+                    user.Surname = info.IsDBNull(info.GetOrdinal("Surname"))
                         ?""
                         :info.GetString(info.GetOrdinal("Surname"));
                     
-                    user.Name = info.GetValue(info.GetOrdinal("Name")).GetType()== typeof(DBNull)
+                    user.Name = info.IsDBNull(info.GetOrdinal("Name"))
                         ?""
                         :info.GetString(info.GetOrdinal("Name"));
                     
-                    user.Image = info.GetValue(info.GetOrdinal("Image")).GetType()== typeof(DBNull)
+                    user.Image = info.IsDBNull(info.GetOrdinal("Image"))
                         ?""
                         :info.GetString(info.GetOrdinal("Image"));
-                    
-                    user.Style = info.GetValue(info.GetOrdinal("StyleName")).GetType() == typeof(DBNull)
+                    user.Style = new StyleModel();
+                    user.Style.ID = info.IsDBNull(info.GetOrdinal("Style"))
+                        ?0
+                        :info.GetInt32(info.GetOrdinal("Style"));
+                    user.Style.Stylename = info.IsDBNull(info.GetOrdinal("StyleName"))
                         ?""
                         :info.GetString(info.GetOrdinal("StyleName"));
                     
@@ -60,6 +63,8 @@ namespace ZPSH_Badge.Views
 
                 UsersGridView.ItemsSource = users;
             }
+            UsersGridView.Items.Refresh();
+            conn.Close();
             
         }
 
@@ -100,7 +105,42 @@ namespace ZPSH_Badge.Views
 
         private void AddUserBtnClick(object sender, RoutedEventArgs e)
         {
-            UserInfo ui = new UserInfo();
+            Userinformation userinfo = new Userinformation();
+            userinfo.ClosedPage += RenewTable;
+            NavigationService.Navigate(userinfo);
+        }
+
+        private void RenewTable()
+        {
+            ImportDbData();
+        }
+
+        private void DeleteUserBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (UsersGridView.SelectedIndex != -1)
+            {
+                UserModel selected = (UserModel)UsersGridView.SelectedItem;
+                SQLiteConnection conn = new SQLiteConnection(connectionString);
+                conn.Open();
+                string request = $"DELETE FROM users WHERE  ID={selected.ID}";
+                SQLiteCommand coma = new SQLiteCommand(request, conn);
+                coma.ExecuteNonQuery();
+                conn.Close();
+                ImportDbData();
+            }
+        }
+
+        private void EditUserBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (UsersGridView.SelectedIndex != -1)
+            {
+                UserModel selected = (UserModel)UsersGridView.SelectedItem;
+                Userinformation page = new Userinformation(selected);
+                page.ClosedPage += RenewTable;
+                NavigationService.Navigate(page);
+            }
+            
+            
         }
     }
 }

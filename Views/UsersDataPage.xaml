@@ -24,6 +24,7 @@
                 <RowDefinition Height="38px"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
+            
             <TextBlock Grid.Row="1" Text="Список участников" FontSize="24" FontWeight="Medium" Foreground="Black"></TextBlock>
             <DockPanel Grid.Row="3" Dock="Right">
                 <Button Width="Auto" HorizontalAlignment="Right" DockPanel.Dock="Right" Background="Crimson" Click="AddUserBtnClick">
@@ -33,14 +34,14 @@
                      </DockPanel>
                 </Button>
                 
-                <Button Width="Auto" Background="White" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <Button Width="Auto" Background="White" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="EditUserBtnClick">
                     <DockPanel Margin="10px">
                         <Image Source="../Resources/Images/pencil-line.png"></Image>
                         <TextBlock Text="Редактировать" VerticalAlignment="Center"></TextBlock>
                     </DockPanel>
                 </Button>
                 
-                <Button Width="Auto" Background="White" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <Button Width="Auto" Background="White" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="DeleteUserBtnClick">
                     <DockPanel Margin="10px">
                         <Image Source="../Resources/Images/delete-bin-line.png"></Image>
                         <TextBlock Text="Удалить" VerticalAlignment="Center"></TextBlock>
@@ -55,12 +56,12 @@
                 
             </DockPanel>
             
-            <DataGrid Grid.Row="4" x:Name="UsersGridView"  RowHeight="50" Foreground="Black" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="4" x:Name="UsersGridView"  RowHeight="50" Foreground="Black" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path = ID}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Path = Name}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path = Surname}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Стиль" Width="Auto" Binding="{Binding Path = Style}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Стиль" Width="Auto" Binding="{Binding Path = Style.Stylename}"></DataGridTextColumn>
                     <DataGridCheckBoxColumn Header="Есть фотография" Width="150" Binding="{Binding Path = HasImage}"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
