@@ -26,7 +26,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Text="Список участников" FontSize="24" FontWeight="Medium" Foreground="Black"></TextBlock>
             <DockPanel Grid.Row="3" Dock="Right">
-                <Button Width="Auto" HorizontalAlignment="Right" DockPanel.Dock="Right" Background="Crimson">
+                <Button Width="Auto" HorizontalAlignment="Right" DockPanel.Dock="Right" Background="Crimson" Click="AddUserBtnClick">
                      <DockPanel Margin="10px">
                          <Image Source="./../Resources/Images/add-line.png" Width="18px" ></Image>
                          <TextBlock Text="Добавить" VerticalAlignment="Center"></TextBlock>
@@ -47,8 +47,23 @@
                     </DockPanel>
                 </Button>
                 
+                <Button Width="Auto" Background="Black" DockPanel.Dock="Left" HorizontalAlignment="Left">
+                    <DockPanel Margin="10px">
+                        <TextBlock Text="Печать" Foreground="White"></TextBlock>
+                    </DockPanel>
+                </Button>
+                
             </DockPanel>
-            <DataGrid Grid.Row="4" x:Name="UsersGridView"  RowHeight="50" Foreground="Black"></DataGrid>
+            
+            <DataGrid Grid.Row="4" x:Name="UsersGridView"  RowHeight="50" Foreground="Black" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path = ID}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Path = Name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path = Surname}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Стиль" Width="Auto" Binding="{Binding Path = Style}"></DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="Есть фотография" Width="150" Binding="{Binding Path = HasImage}"></DataGridCheckBoxColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
     

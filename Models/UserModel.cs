@@ -2,8 +2,11 @@
 
 public class UserModel
 {
-    public int ID;
-    public string Name;
-    public string Surname;
-    public string Image = "";
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+
+    public string Image { get; set; }
+    public bool HasImage { get; set; }
+    public string Style { get; set; }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Data.SQLite;
 using System.IO;
+using System.Windows;
 using ZPSH_Badge.Models;
 
 namespace ZPSH_Badge.Views
@@ -25,9 +26,10 @@ namespace ZPSH_Badge.Views
 
         private void ImportDbData()
         {
+            users.Clear();
             SQLiteConnection conn = new SQLiteConnection(connectionString);
             conn.Open();
-            string request = "SELECT * FROM users";
+            string request = "SELECT users.* ,styles.Name as StyleName FROM users Inner JOIN styles ON users.Style = styles.ID ;";
             SQLiteCommand coma = new SQLiteCommand(request, conn);
             SQLiteDataReader info = coma.ExecuteReader();
             if (info.HasRows)
@@ -36,13 +38,26 @@ namespace ZPSH_Badge.Views
                 {
                     UserModel user = new UserModel();
                     user.ID = info.GetInt32(info.GetOrdinal("ID"));
-                    user.Surname = info.GetString(info.GetOrdinal("Surname"));
-                    user.Name = info.GetString(info.GetOrdinal("Name"));
-                    //user.Image = info.GetString(info.GetOrdinal("Image"));
+                    user.Surname = info.GetValue(info.GetOrdinal("Surname")).GetType()== typeof(DBNull)
+                        ?""
+                        :info.GetString(info.GetOrdinal("Surname"));
+                    
+                    user.Name = info.GetValue(info.GetOrdinal("Name")).GetType()== typeof(DBNull)
+                        ?""
+                        :info.GetString(info.GetOrdinal("Name"));
+                    
+                    user.Image = info.GetValue(info.GetOrdinal("Image")).GetType()== typeof(DBNull)
+                        ?""
+                        :info.GetString(info.GetOrdinal("Image"));
+                    
+                    user.Style = info.GetValue(info.GetOrdinal("StyleName")).GetType() == typeof(DBNull)
+                        ?""
+                        :info.GetString(info.GetOrdinal("StyleName"));
+                    
+                    if (user.Image!="") user.HasImage = true;
                     users.Add(user);
                 }
 
-                UsersGridView.AutoGenerateColumns = true;
                 UsersGridView.ItemsSource = users;
             }
             
@@ -61,8 +76,16 @@ namespace ZPSH_Badge.Views
                           "ID INTEGER PRIMARY KEY," +
                           "Name varchar(100)," +
                           "Surname varchar(100)," +
-                          "Image varchar(100))";
+                          "Image varchar," +
+                          "Style INTEGER)";
                 comand = new SQLiteCommand(request,conn);
+                comand.ExecuteNonQuery();
+
+                request = "CREATE TABLE styles(" +
+                          "ID INTEGER PRIMARY KEY," +
+                          "Name varchar(100)," +
+                          "Path varchar)";
+                comand = new SQLiteCommand(request, conn);
                 comand.ExecuteNonQuery();
             }
         }
@@ -73,6 +96,11 @@ namespace ZPSH_Badge.Views
             {
                 SQLiteConnection.CreateFile("Badges.sqlite");
             }
+        }
+
+        private void AddUserBtnClick(object sender, RoutedEventArgs e)
+        {
+            UserInfo ui = new UserInfo();
         }
     }
 }
